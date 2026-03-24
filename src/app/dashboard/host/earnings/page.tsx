@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DollarSign, TrendingUp, TrendingDown, Download, Filter, Calendar } from "lucide-react";
+import { DollarSign, TrendingUp, TrendingDown, Download, Filter, Calendar, Clock } from "lucide-react";
 
 interface Earning {
   id: string;
@@ -458,4 +458,90 @@ export default function HostEarningsPage() {
               
               <div className="space-y-6">
                 {monthlySummaries.map((summary) => (
-                  <div key={summary.month} className="pb
+                  <div key={summary.month} className="pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-medium text-gray-900">{summary.month}</span>
+                      <span className="text-xl font-bold text-gray-900">{summary.total} €</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{summary.bookings} réservation{summary.bookings > 1 ? "s" : ""}</span>
+                      <span>Moyenne: {summary.averagePrice} €</span>
+                    </div>
+                    <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-[#FF385C] h-2 rounded-full"
+                        style={{ width: `${(summary.total / 2000) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-4">Prochain paiement</h3>
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium text-blue-900">Montant à recevoir</span>
+                    <span className="text-xl font-bold text-blue-900">1,160 €</span>
+                  </div>
+                  <p className="text-blue-800 text-sm">
+                    Paiement prévu le 05/04/2024
+                  </p>
+                  <button className="mt-3 w-full text-center text-blue-700 font-medium hover:text-blue-800">
+                    Voir les détails →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Conseils */}
+            <div className="mt-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+              <h3 className="text-xl font-bold mb-4">Optimisez vos revenus</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-bold mb-1">🎯 Prix stratégique</h4>
+                  <p className="text-sm opacity-90">
+                    Ajustez vos tarifs selon la saison et la demande.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-1">📈 Augmentez l'occupation</h4>
+                  <p className="text-sm opacity-90">
+                    Offrez des promotions pour les séjours longs.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-1">💰 Réduisez les frais</h4>
+                  <p className="text-sm opacity-90">
+                    Optimisez vos coûts pour maximiser vos profits.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Graphique (simulé) */}
+        <div className="mt-8 bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Évolution des revenus</h2>
+          <div className="h-64 flex items-end justify-between gap-2">
+            {[40, 60, 80, 100, 85, 95, 120, 110, 130, 140, 125, 155].map((height, index) => (
+              <div key={index} className="flex-1 flex flex-col items-center">
+                <div
+                  className="w-full bg-gradient-to-t from-[#FF385C] to-[#E31C5F] rounded-t-lg"
+                  style={{ height: `${height}%` }}
+                ></div>
+                <span className="text-xs text-gray-500 mt-2">
+                  {["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"][index]}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-4 text-gray-600">
+            Évolution mensuelle sur 12 mois (en centaines d'euros)
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
