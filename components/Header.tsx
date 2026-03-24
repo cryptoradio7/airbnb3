@@ -30,6 +30,12 @@ export default function Header() {
             ) : session ? (
               <>
                 <Link
+                  href="/dashboard/bookings"
+                  className="text-gray-700 hover:text-[#FF385C] transition-colors"
+                >
+                  Mes réservations
+                </Link>
+                <Link
                   href="/dashboard"
                   className="text-gray-700 hover:text-[#FF385C] transition-colors"
                 >
@@ -89,6 +95,13 @@ export default function Header() {
               </div>
             ) : session ? (
               <div className="space-y-3">
+                <Link
+                  href="/dashboard/bookings"
+                  className="block py-2 text-gray-700 hover:text-[#FF385C] transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Mes réservations
+                </Link>
                 <Link
                   href="/dashboard"
                   className="block py-2 text-gray-700 hover:text-[#FF385C] transition-colors"

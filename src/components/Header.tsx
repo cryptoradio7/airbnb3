@@ -1,12 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { Search, Globe, Menu, User, Heart } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, Globe, Menu, User, Heart, MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Header() {
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [unreadMessages, setUnreadMessages] = useState(0);
+
+  // Charger le nombre de messages non lus
+  useEffect(() => {
+    const loadUnreadMessages = async () => {
+      try {
+        // Dans une vraie implémentation, on appellerait une API
+        // Par exemple: const response = await fetch('/api/messages/unread-count');
+        // const data = await response.json();
+        // setUnreadMessages(data.count);
+        
+        // Simulation pour l'instant
+        setUnreadMessages(2); // 2 messages non lus
+      } catch (error) {
+        console.error('Error loading unread messages:', error);
+      }
+    };
+
+    loadUnreadMessages();
+    
+    // Recharger toutes les 30 secondes
+    const interval = setInterval(loadUnreadMessages, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-sm">
@@ -66,6 +92,19 @@ export default function Header() {
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
               <Globe className="w-5 h-5" />
             </button>
+            
+            {/* Bouton messages avec badge */}
+            <Link
+              href="/dashboard/traveler/messages"
+              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <MessageSquare className="w-5 h-5" />
+              {unreadMessages > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-xs font-medium rounded-full flex items-center justify-center">
+                  {unreadMessages > 9 ? '9+' : unreadMessages}
+                </span>
+              )}
+            </Link>
             
             <div className="flex items-center gap-2 border border-gray-300 rounded-full px-3 py-2 hover:shadow-md transition-shadow cursor-pointer">
               <Menu className="w-5 h-5" />
