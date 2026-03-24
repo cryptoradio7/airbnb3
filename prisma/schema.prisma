@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String?   // hashed
+  image         String?
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  listings      Listing[]
+  bookings      Booking[]
+  messagesSent  Message[] @relation("Sender")
+  messagesReceived Message[] @relation("Recipient")
+  reviews       Review[]
+}
+
+model Listing {
+  id            String    @id @default(cuid())
+  title         String
+  description   String
+  price         Int
+  location      String
+  city          String
+  country       String
+  latitude      Float?
+  longitude     Float?
+  images        String[]  // JSON array of URLs
+  amenities     String[]  // JSON array
+  maxGuests     Int
+  bedrooms      Int
+  beds          Int
+  bathrooms     Int
+  hostId        String
+  host          User      @relation(fields: [hostId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  bookings      Booking[]
+  reviews       Review[]
+}
+
+model Booking {
+  id            String    @id @default(cuid())
+  listingId     String
+  listing       Listing   @relation(fields: [listingId], references: [id])
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  checkIn       DateTime
+  checkOut      DateTime
+  guests        Int
+  totalPrice    Int
+  status        String    @default("confirmed") // confirmed, cancelled, completed
+  createdAt     DateTime  @default(now())
+
+  // Relations
+  messages      Message[]
+}
+
+model Message {
+  id            String    @id @default(cuid())
+  bookingId     String
+  booking       Booking   @relation(fields: [bookingId], references: [id])
+  senderId      String
+  sender        User      @relation("Sender", fields: [senderId], references: [id])
+  recipientId   String
+  recipient     User      @relation("Recipient", fields: [recipientId], references: [id])
+  content       String
+  read          Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+}
+
+model Review {
+  id            String    @id @default(cuid())
+  listingId     String
+  listing       Listing   @relation(fields: [listingId], references: [id])
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  bookingId     String
+  booking       Booking   @relation(fields: [bookingId], references: [id])
+  rating        Int       // 1-5
+  comment       String?
+  createdAt     DateTime  @default(now())
+}
