@@ -460,4 +460,57 @@ export default function HostBookingsPage() {
                         >
                           Voir l'annonce
                         </button>
-                        <
+                        <button
+                          onClick={() => alert("Fonctionnalité de message à implémenter")}
+                          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                        >
+                          Contacter le voyageur
+                        </button>
+                      </div>
+                    )}
+
+                    {booking.status === "completed" && (
+                      <div className="flex justify-end gap-3 pt-6 border-t border-gray-100">
+                        <button
+                          onClick={() => alert("Fonctionnalité d'avis à implémenter")}
+                          className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                        >
+                          Laisser un avis
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+
+        {/* Conseils */}
+        <div className="mt-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+          <h3 className="text-xl font-bold mb-4">Conseils pour gérer vos réservations</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="font-bold mb-2">Réponse rapide</h4>
+              <p className="text-sm opacity-90">
+                Répondez aux demandes de réservation dans les 24h pour améliorer votre taux de réponse.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2">Communication claire</h4>
+              <p className="text-sm opacity-90">
+                Fournissez toutes les informations nécessaires aux voyageurs avant leur arrivée.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2">Calendrier à jour</h4>
+              <p className="text-sm opacity-90">
+                Mettez régulièrement à jour votre calendrier pour éviter les doubles réservations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
