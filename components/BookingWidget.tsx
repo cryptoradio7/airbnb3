@@ -39,7 +39,6 @@ export default function BookingWidget({ price, listingId }: BookingWidgetProps) 
 
     setIsBooking(true);
     try {
-      // In a real app, this would call your booking API
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
@@ -54,15 +53,13 @@ export default function BookingWidget({ price, listingId }: BookingWidgetProps) 
         }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        alert('Réservation effectuée avec succès !');
-        // Reset form
-        setCheckIn('');
-        setCheckOut('');
-        setGuests(1);
+        // Rediriger vers la page de confirmation
+        window.location.href = `/bookings/${data.booking.id}/confirmation`;
       } else {
-        const error = await response.json();
-        alert(`Erreur: ${error.error || 'Échec de la réservation'}`);
+        alert(`Erreur: ${data.error || 'Échec de la réservation'}`);
       }
     } catch (error) {
       console.error('Booking error:', error);
