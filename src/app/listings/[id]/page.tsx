@@ -136,9 +136,17 @@ export default async function ListingPage({ params }: PageProps) {
 
           {/* Reviews */}
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Avis ({listing.reviews.length})
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-semibold">
+                Avis ({listing.reviews.length})
+              </h2>
+              <a
+                href={`/listings/${listing.id}/review`}
+                className="text-sm font-medium text-[#FF385C] hover:underline"
+              >
+                Laisser un avis
+              </a>
+            </div>
             <ReviewsList 
               reviews={listing.reviews}
               averageRating={averageRating}

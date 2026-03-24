@@ -8,6 +8,24 @@ import TravelerBookingCard from '@/components/TravelerBookingCard';
 
 interface Booking {
   id: string;
+  checkIn: Date;
+  checkOut: Date;
+  guests: number;
+  totalPrice: number;
+  status: 'confirmed' | 'cancelled' | 'pending';
+  listing: {
+    id: string;
+    title: string;
+    location: string;
+    city: string;
+    country: string;
+    images: string;
+    price: number;
+  };
+}
+
+interface BookingRaw {
+  id: string;
   checkIn: string;
   checkOut: string;
   guests: number;
@@ -21,6 +39,15 @@ interface Booking {
     country: string;
     images: string;
     price: number;
+  };
+}
+
+function normalizeBooking(raw: BookingRaw): Booking {
+  return {
+    ...raw,
+    checkIn: new Date(raw.checkIn),
+    checkOut: new Date(raw.checkOut),
+    status: (raw.status as 'confirmed' | 'cancelled' | 'pending') || 'confirmed',
   };
 }
 
@@ -50,8 +77,9 @@ export default function UpcomingBookingsPage() {
       const response = await fetch('/api/bookings/traveler?upcoming=true');
       if (response.ok) {
         const data = await response.json();
-        setBookings(data.bookings);
-        setFilteredBookings(data.bookings);
+        const normalized: Booking[] = (data.bookings as BookingRaw[]).map(normalizeBooking);
+        setBookings(normalized);
+        setFilteredBookings(normalized);
       }
     } catch (error) {
       console.error('Erreur lors du chargement des réservations:', error);
