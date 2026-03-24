@@ -15,6 +15,8 @@ interface Listing {
   location: string;
   city: string;
   country: string;
+  latitude: number | null;
+  longitude: number | null;
   images: string;
   amenities: string;
   maxGuests: number;
@@ -22,8 +24,8 @@ interface Listing {
   beds: number;
   bathrooms: number;
   hostId: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   _count?: {
     bookings: number;
     reviews: number;
@@ -68,6 +70,8 @@ export default function HostListingsPage() {
           location: "7ème arrondissement, Paris",
           city: "Paris",
           country: "France",
+          latitude: 48.8566,
+          longitude: 2.3522,
           images: JSON.stringify(["https://picsum.photos/800/600?random=1"]),
           amenities: JSON.stringify(["WiFi", "Cuisine équipée", "Climatisation"]),
           maxGuests: 4,
@@ -75,8 +79,8 @@ export default function HostListingsPage() {
           beds: 2,
           bathrooms: 1,
           hostId: session?.user?.id || "",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
           _count: {
             bookings: 8,
             reviews: 12,
@@ -90,6 +94,8 @@ export default function HostListingsPage() {
           location: "11ème arrondissement, Paris",
           city: "Paris",
           country: "France",
+          latitude: 48.8575,
+          longitude: 2.3700,
           images: JSON.stringify(["https://picsum.photos/800/600?random=2"]),
           amenities: JSON.stringify(["WiFi", "Machine à laver", "TV"]),
           maxGuests: 2,
@@ -97,8 +103,8 @@ export default function HostListingsPage() {
           beds: 1,
           bathrooms: 1,
           hostId: session?.user?.id || "",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
           _count: {
             bookings: 15,
             reviews: 20,
@@ -112,6 +118,8 @@ export default function HostListingsPage() {
           location: "Normandie",
           city: "Rouen",
           country: "France",
+          latitude: 49.4431,
+          longitude: 1.0993,
           images: JSON.stringify(["https://picsum.photos/800/600?random=3"]),
           amenities: JSON.stringify(["Piscine", "Jardin", "BBQ", "Parking"]),
           maxGuests: 8,
@@ -119,8 +127,8 @@ export default function HostListingsPage() {
           beds: 6,
           bathrooms: 3,
           hostId: session?.user?.id || "",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
           _count: {
             bookings: 5,
             reviews: 7,
