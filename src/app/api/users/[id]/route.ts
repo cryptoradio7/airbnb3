@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "../../../../../auth";
-import { prisma } from "../../../../../../prisma";
+import { prisma } from "../../../../../lib/prisma";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
@@ -35,7 +35,7 @@ export async function PATCH(
     const validatedFields = updateUserSchema.safeParse(body);
     if (!validatedFields.success) {
       return NextResponse.json(
-        { error: validatedFields.error.errors[0].message },
+        { error: validatedFields.error.issues[0].message },
         { status: 400 }
       );
     }
