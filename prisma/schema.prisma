@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -18,11 +17,11 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  listings      Listing[]
-  bookings      Booking[]
-  messagesSent  Message[] @relation("Sender")
+  listings         Listing[]
+  bookings         Booking[]
+  messagesSent     Message[] @relation("Sender")
   messagesReceived Message[] @relation("Recipient")
-  reviews       Review[]
+  reviews          Review[]
 }
 
 model Listing {
@@ -35,8 +34,8 @@ model Listing {
   country       String
   latitude      Float?
   longitude     Float?
-  images        String[]  // JSON array of URLs
-  amenities     String[]  // JSON array
+  images        String    // JSON string: array of URLs
+  amenities     String    // JSON string: array of strings
   maxGuests     Int
   bedrooms      Int
   beds          Int
@@ -66,6 +65,7 @@ model Booking {
 
   // Relations
   messages      Message[]
+  reviews       Review[]
 }
 
 model Message {
